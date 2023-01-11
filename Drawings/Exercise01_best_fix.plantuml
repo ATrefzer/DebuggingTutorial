@@ -1,0 +1,36 @@
+@startuml Exercise
+
+hide circle
+hide footbox
+'skinparam monochrome true
+
+
+UI_Dispatcher -> DeviceScannerViewModel : Execute command on button Click
+activate UI_Dispatcher #LightGreen
+activate DeviceScannerViewModel #LightGreen
+
+DeviceScannerViewModel -> DeviceScanner : ScanDevicesAsync
+activate DeviceScanner #LightGreen
+
+
+DeviceScanner  -> ThreadPool  :  Task.Run(DoScan)
+activate ThreadPool #LightGreen
+deactivate ThreadPool
+deactivate DeviceScanner
+deactivate DeviceScannerViewModel
+deactivate UI_Dispatcher
+
+
+ThreadPool -> DeviceScanner  : DoScan
+activate ThreadPool #LightBlue
+activate DeviceScanner #LightBlue
+
+DeviceScanner -> DeviceScanner : Copy found devices
+
+DeviceScanner -> DeviceScannerViewModel ++ #LightBlue: event: NewDevicesAvailable(Devices)
+
+DeviceScannerViewModel -> DeviceScannerViewModel ++ #LightBlue : SetDevices
+
+note left : Calls \nOnPropertyChanged \nto update the WPF UI. \nThis is allowed in any thread.
+
+@enduml

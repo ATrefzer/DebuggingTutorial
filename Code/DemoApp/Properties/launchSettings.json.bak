@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "Deadlocks": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "COMPlus_ReadyToRun": "1",
+        "COMPlus_ZapDisable": "0"
+      },
+      "nativeDebugging": false
+    }
+  }
+}

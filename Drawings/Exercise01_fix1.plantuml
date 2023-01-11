@@ -1,0 +1,36 @@
+@startuml Exercise Fix1
+
+hide circle
+hide footbox
+'skinparam monochrome true
+
+
+UI_Dispatcher -> DeviceScannerViewModel ++ #LightGreen : Execute command on button Click
+
+create DeviceScanner
+DeviceScannerViewModel -> DeviceScanner ++ #LightGreen
+
+DeviceScannerViewModel -> DeviceScanner  -- : ScanDevicesAsync
+
+DeviceScanner  -> ThreadPool -- :   Task.Run(DoScan)
+
+ThreadPool -> DeviceScanner ++ #LightBlue : DoScan
+
+DeviceScanner -> DeviceScannerViewModel ++ #LightBlue: event: NewDevicesAvailable
+
+DeviceScannerViewModel -> UI_Dispatcher ++ #LightBlue :  BeginInvoke(UpdateDevicesForUi)
+
+UI_Dispatcher -> UI_Dispatcher  ++ #LightBlue : Queue
+deactivate UI_Dispatcher
+deactivate UI_Dispatcher
+
+
+UI_Dispatcher -> DeviceScannerViewModel ++ #LightGreen : UpdateDevicesForUi
+
+DeviceScannerViewModel -> DeviceScanner ++ #LightGreen : GetFoundDevicesAddresses
+
+DeviceScannerViewModel -> DeviceScannerViewModel ++ #LightGreen : SetDevices
+
+note left : Calls \nOnPropertyChanged \nto update the WPF UI
+
+@enduml

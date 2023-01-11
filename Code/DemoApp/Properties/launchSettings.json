@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "DemoApp": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "_COMPlus_ZapDisable": "0",
+        "_COMPlus_ReadyToRun": "1"
+      },
+      "nativeDebugging": false
+    }
+  }
+}

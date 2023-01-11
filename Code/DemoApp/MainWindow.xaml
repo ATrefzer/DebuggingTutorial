@@ -1,0 +1,76 @@
+﻿<Window x:Class="DemoApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DemoApp"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Window.DataContext>
+        <local:MainWindowViewModel />
+    </Window.DataContext>
+    <TabControl>
+        <TabItem Header="Debug Workshop">
+            <StackPanel>
+
+
+                <GroupBox Header="Memory Dumps and Optimized Code Demo">
+                    <StackPanel Orientation="Vertical">
+                        <Button Content="Crash" Command="{Binding CrashCommand}" />
+                        <Button Content="First and Second Chance" Command="{Binding FirstAndSecondChanceCommand}" />
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox Header="Race Conditions Demo and other stuff">
+                    <StackPanel Orientation="Vertical">
+                        <Button Content="Run Sync Block demo" Command="{Binding SyncBlockCommand}" />
+                        <Button Content="Instruction reordering Demo" Command="{Binding ReorderCommand}" />
+                        <Button Content="Caching deadlock" Command="{Binding CachingDeadlockCommand}" />
+                        <Button Content="Non atomic data access" Command="{Binding NonAtomicAccessCommand}" />
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox Header="Deadlocks Demo">
+                    <StackPanel Orientation="Vertical">
+                        <Button Content="Run classic deadlock" Command="{Binding ClassicDeadlockCommand}" />
+                        <Button Content="Run classic deadlock timeout solution"
+                        Command="{Binding ClassicDeadlockCommandTimeoutSolution}" />
+                        <Button Content="Dispatcher Queue Deadlock" Command="{Binding DispatcherQueueDeadlockCommand}" />
+
+
+                    </StackPanel>
+                </GroupBox>
+
+
+                <GroupBox Header="Deadlocks Exercises">
+                    <StackPanel Orientation="Vertical">
+                        <Button Content="Run render deadlock" Command="{Binding CreateImageCommand}" />
+                        <Image Source="{Binding Image}" Width="100" Height="100" />
+                    </StackPanel>
+                </GroupBox>
+
+
+                <GroupBox DataContext="{Binding ScannerViewModel}" Header="Scan devices">
+                    <StackPanel Orientation="Vertical">
+                        <Button Content="Start Scanning devices" Command="{Binding ScanForDevicesCommand}"
+                        IsEnabled="{Binding IsEnabled}" />
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="Found Devices" />
+                            <Image Source="{Binding Status}" Width="16" Height="16" />
+                        </StackPanel>
+
+                        <ListBox ItemsSource="{Binding Devices}" Height="150" />
+
+                    </StackPanel>
+                </GroupBox>
+            </StackPanel>
+        </TabItem>
+        <TabItem Header="async await Pitfalls">
+            <StackPanel>
+                <Button Content="Avoid aggregate exceptions" Command="{Binding AvoidAggregateExceptionCommand}" />
+                <Button Content="Swallowing exceptions" Command="{Binding SwallowingExceptionsCommand}" />
+                <Button Content="Try something new" Command="{Binding TrySomethingCommand}" />
+            </StackPanel>
+        </TabItem>
+    </TabControl>
+</Window>
